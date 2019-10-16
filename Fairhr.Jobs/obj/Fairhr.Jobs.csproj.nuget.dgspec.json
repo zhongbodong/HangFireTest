@@ -1,0 +1,95 @@
+{
+  "format": 1,
+  "restore": {
+    "D:\\泛亚\\项目\\Fairhr.Jobs\\Fairhr.Jobs\\Fairhr.Jobs.csproj": {}
+  },
+  "projects": {
+    "D:\\泛亚\\项目\\Fairhr.Jobs\\Fairhr.Jobs\\Fairhr.Jobs.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "D:\\泛亚\\项目\\Fairhr.Jobs\\Fairhr.Jobs\\Fairhr.Jobs.csproj",
+        "projectName": "Fairhr.Jobs",
+        "projectPath": "D:\\泛亚\\项目\\Fairhr.Jobs\\Fairhr.Jobs\\Fairhr.Jobs.csproj",
+        "packagesPath": "C:\\Users\\Administrator\\.nuget\\packages\\",
+        "outputPath": "D:\\泛亚\\项目\\Fairhr.Jobs\\Fairhr.Jobs\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\Administrator\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "netcoreapp2.2"
+        ],
+        "sources": {
+          "http://120.77.250.111:8021/nuget": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "netcoreapp2.2": {
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "netcoreapp2.2": {
+          "dependencies": {
+            "Com.Ctrip.Framework.Apollo.Configuration": {
+              "target": "Package",
+              "version": "[2.1.0, )"
+            },
+            "HangFire": {
+              "target": "Package",
+              "version": "[1.7.6, )"
+            },
+            "Hangfire.HttpJob": {
+              "target": "Package",
+              "version": "[2.2.3, )"
+            },
+            "Hangfire.HttpJob.Agent": {
+              "target": "Package",
+              "version": "[1.0.7, )"
+            },
+            "Hangfire.HttpJob.Client": {
+              "target": "Package",
+              "version": "[1.0.9, )"
+            },
+            "Hangfire.MySql.Core": {
+              "target": "Package",
+              "version": "[2.2.5, )"
+            },
+            "Microsoft.AspNetCore.App": {
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[2.2.0, )",
+              "autoReferenced": true
+            },
+            "Microsoft.AspNetCore.Razor.Design": {
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[2.2.0, )"
+            },
+            "Microsoft.NETCore.App": {
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[2.2.0, )",
+              "autoReferenced": true
+            }
+          },
+          "imports": [
+            "net461"
+          ],
+          "assetTargetFallback": true,
+          "warn": true
+        }
+      }
+    }
+  }
+}
