@@ -38,7 +38,8 @@ namespace Fairhr.Jobs
             {
                 app.UseDeveloperExceptionPage();
             }
-
+            // 中午面板
+            System.Threading.Thread.CurrentThread.CurrentUICulture = new System.Globalization.CultureInfo("zh-CN");
             app.UseHangfireServer();
 
             // 管理员面板
