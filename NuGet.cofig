@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<configuration>
-  <packageSources>
-    <add key="NuGet" value="https://api.nuget.org/v3/index.json" />
-	  <add key="FairHR" value="http://120.77.250.111:8021/nuget" />
-  </packageSources>
-</configuration>
