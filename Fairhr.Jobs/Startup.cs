@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Fairhr.Jobs.Filter;
+using Fairhr.Logs;
 using Hangfire;
 using Hangfire.Console;
 using Hangfire.Dashboard;
@@ -28,6 +29,11 @@ namespace Fairhr.Jobs
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddHangfire(ConfigurationHangfire);
+            services.AddFairhrLogs(options =>
+            {
+                options.Key = Configuration["logKey"];
+                options.ServerUrl = Configuration["logUrl"];
+            });
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
@@ -43,9 +49,10 @@ namespace Fairhr.Jobs
             //    Authorization = new[] { new FairhrJobsAuthorizationFilter() }
             //});
             app.UseHangfireDashboard("/jobs");
-
+            app.UseFairhrLogs();
             app.Run(async (context) =>
            {
+               FairhrLogs.Info("测试");
                await Task.CompletedTask;
                context.Response.Redirect("/jobs");
            });
