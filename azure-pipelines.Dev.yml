@@ -1,0 +1,32 @@
+name: $(Date:yyyyMMdd)$(Rev:-r)
+
+# 使用微软提供的主机
+pool:
+  vmImage: 'Ubuntu 16.04'
+
+variables:
+  buildConfiguration: 'Release'
+
+steps:
+- script: dotnet restore
+- task: DotNetCoreCLI@2
+  displayName: Build
+  inputs:
+    command: 'build' 
+    projects: '**/*.csproj'
+    arguments: '--configuration $(BuildConfiguration)'
+- task: DotNetCoreCLI@2
+  displayName: Publish
+  inputs:
+    command: publish
+    projects: '**/*.csproj'
+    publishWebProjects: false
+    arguments: '--configuration $(BuildConfiguration) --output $(build.artifactstagingdirectory)'
+    zipAfterPublish: false
+    modifyOutputPath: True
+    includeNuGetOrg: True
+
+- task: PublishBuildArtifacts@1
+  inputs:
+    artifactName: 'dev'
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
