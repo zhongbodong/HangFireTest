@@ -1,0 +1,33 @@
+name: $(Date:yyyyMMdd)$(Rev:-r)
+
+trigger:
+- Development
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+variables:
+  buildConfiguration: 'Release'
+
+steps:
+- task: DotNetCoreCLI@2
+  displayName: Build
+  inputs:
+    command: 'build' 
+    projects: '**/*.csproj'
+    arguments: '--configuration $(BuildConfiguration)'
+- task: DotNetCoreCLI@2
+  displayName: Publish
+  inputs:
+    command: publish
+    projects: '**/*.csproj'
+    publishWebProjects: false
+    arguments: '--configuration $(BuildConfiguration) --output $(build.artifactstagingdirectory)'
+    zipAfterPublish: false
+    modifyOutputPath: True
+    includeNuGetOrg: True
+
+- task: PublishBuildArtifacts@1
+  inputs:
+    artifactName: 'dev'
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
