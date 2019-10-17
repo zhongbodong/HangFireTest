@@ -1,17 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using Fairhr.Jobs.Filter;
 using Fairhr.Logs;
 using Hangfire;
 using Hangfire.Console;
-using Hangfire.Dashboard;
+using Hangfire.Dashboard.BasicAuthorization;
 using Hangfire.HttpJob;
-using Hangfire.MySql.Core;
+using Hangfire.MySql;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -44,31 +40,80 @@ namespace Fairhr.Jobs
             }
 
             app.UseHangfireServer();
-            //app.UseHangfireDashboard("/jobs", new DashboardOptions()
-            //{
-            //    Authorization = new[] { new FairhrJobsAuthorizationFilter() }
-            //});
-            app.UseHangfireDashboard("/jobs");
+
+            // 管理员面板
+            app.UseHangfireDashboard("/jobs", adminOptions);
+
+            //只读面板，只能读取不能操作
+            app.UseHangfireDashboard("/read", readOptions);
+
             app.UseFairhrLogs();
             app.Run(async (context) =>
            {
-               FairhrLogs.Info("测试");
                await Task.CompletedTask;
                context.Response.Redirect("/jobs");
            });
         }
 
-        #region Hangfire配置 https://www.bookstack.cn/read/Hangfire-zh-official/3.md
+        #region Hangfire配置 https://github.com/yuzd/Hangfire.HttpJob/wiki
+
+        private DashboardOptions adminOptions = new DashboardOptions()
+        {
+            DisplayStorageConnectionString = false,
+            IsReadOnlyFunc = context => false,
+            IgnoreAntiforgeryToken = true,
+            Authorization = new[] { new BasicAuthAuthorizationFilter(new BasicAuthAuthorizationFilterOptions() {
+            RequireSsl=false,
+            SslRedirect=false,
+            LoginCaseSensitive=true,
+            Users=new []{
+                 new BasicAuthAuthorizationUser
+                 {
+                    Login="admin",
+                    PasswordClear="123"
+                 },
+                 new BasicAuthAuthorizationUser
+                 {
+                    Login="fanyou",
+                    PasswordClear="123"
+                 }
+            }
+            })}
+        };
+
+        private DashboardOptions readOptions = new DashboardOptions()
+        {
+            IgnoreAntiforgeryToken = true,
+            DisplayStorageConnectionString = false,
+            IsReadOnlyFunc = context => true
+        };
         private void ConfigurationHangfire(IGlobalConfiguration globalConfiguration)
         {
             globalConfiguration.UseStorage(
-                new MySqlStorage(Configuration["jobdb"]))
+                new MySqlStorage(Configuration["jobdb"], new MySqlStorageOptions()
+                {
+                    QueuePollInterval = TimeSpan.FromSeconds(15),
+                    JobExpirationCheckInterval = TimeSpan.FromHours(1),
+                    CountersAggregateInterval = TimeSpan.FromMinutes(5),
+                    PrepareSchemaIfNecessary = false,
+                    DashboardJobListLimit = 50000,
+                    TransactionTimeout = TimeSpan.FromMinutes(2),
+                    TablesPrefix = "Fairhr_"
+                }))
                 .UseConsole()
                 .UseHangfireHttpJob(new HangfireHttpJobOptions()
                 {
                     DashboardName = "泛亚统一任务调度平台",
                     DashboardTitle = "调度平台",
-                    DashboardFooter = string.Empty
+                    DashboardFooter = string.Empty,
+                    MailOption = new MailOption()
+                    {
+                        Server = "smtp.qq.com",
+                        Port = 465,
+                        UseSsl = true,
+                        User = "510423039@qq.com",
+                        Password = "vkskogjacsqabjgd"
+                    }
                 });
         }
         #endregion
