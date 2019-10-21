@@ -38,15 +38,21 @@ namespace Fairhr.Jobs
             {
                 app.UseDeveloperExceptionPage();
             }
-            // 中午面板
-            System.Threading.Thread.CurrentThread.CurrentUICulture = new System.Globalization.CultureInfo("zh-CN");
-            app.UseHangfireServer();
 
-            // 管理员面板
-            app.UseHangfireDashboard("/jobs", adminOptions);
+            // 中文面板
+            System.Threading.Thread.CurrentThread.CurrentUICulture = new System.Globalization.CultureInfo("zh-CN");
+
+            app.UseHangfireServer(new BackgroundJobServerOptions()
+            {
+                // queue name参数只能由小写字母、数字、下划线和破折号（自1.7.6起）字符组成。
+                Queues = Configuration["queue"].Split(new char[','], StringSplitOptions.RemoveEmptyEntries)
+            });
 
             //只读面板，只能读取不能操作
             app.UseHangfireDashboard("/read", readOptions);
+
+            // 管理员面板
+            app.UseHangfireDashboard("/jobs", adminOptions);
 
             app.UseFairhrLogs();
             app.Run(async (context) =>
@@ -96,7 +102,7 @@ namespace Fairhr.Jobs
                     QueuePollInterval = TimeSpan.FromSeconds(15),
                     JobExpirationCheckInterval = TimeSpan.FromHours(1),
                     CountersAggregateInterval = TimeSpan.FromMinutes(5),
-                    PrepareSchemaIfNecessary = false,
+                    PrepareSchemaIfNecessary = true,
                     DashboardJobListLimit = 50000,
                     TransactionTimeout = TimeSpan.FromMinutes(2),
                     TablesPrefix = "Fairhr_"
@@ -116,6 +122,7 @@ namespace Fairhr.Jobs
                         Password = "vkskogjacsqabjgd"
                     }
                 });
+
         }
         #endregion
     }
