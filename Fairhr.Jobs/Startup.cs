@@ -112,7 +112,7 @@ namespace Fairhr.Jobs
                 {
                     DashboardName = "泛亚统一任务调度平台",
                     DashboardTitle = "调度平台",
-                    DashboardFooter = string.Empty,
+                    DashboardFooter = "Version 1.0",
                     MailOption = new MailOption()
                     {
                         Server = "smtp.qq.com",
@@ -120,7 +120,8 @@ namespace Fairhr.Jobs
                         UseSsl = true,
                         User = "510423039@qq.com",
                         Password = "vkskogjacsqabjgd"
-                    }
+                    },
+                    JobExpirationTimeoutDay = 1
                 });
 
         }
