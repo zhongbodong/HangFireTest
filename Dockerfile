@@ -2,7 +2,7 @@ FROM registry-vpc.cn-shenzhen.aliyuncs.com/mytools/dotnetsdk:2.2-runtime
 
 RUN mkdir /Fairhr.Jobs
 
-COPY jobs-release /Fairhr.Jobs
+COPY job-release /Fairhr.Jobs
 
 WORKDIR /Fairhr.Jobs
 
