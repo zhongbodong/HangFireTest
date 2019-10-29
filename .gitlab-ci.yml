@@ -1,14 +1,82 @@
 image: registry-vpc.cn-shenzhen.aliyuncs.com/mytools/dotnetsdk:2.2
 
+variables:
+  REGISTRY_USER: szli@fairhr.com
+  REGISTRY_HOST: registry-vpc.cn-shenzhen.aliyuncs.com
+
 stages:
   - build
+  - dev
+  - qa
+  - prod
+
+build-test:
+  stage: build
+  tags:
+    - normal
+  script:
+    - "dotnet restore --configfile NuGet.Config"
+    - "dotnet build Fairhr.Jobs/Fairhr.Jobs.csproj -c Release"
+    - "dotnet publish Fairhr.Jobs/Fairhr.Jobs.csproj -c Release -o ../job-release"
+  artifacts:
+    paths:
+      - job-release/
+  only:
+    - Development
+    - QA
+    - Staging
+
+build-prod:
+  stage: build
+  tags:
+    - normal
+  script:
+    - dotnet restore --configfile NuGet.Config
+    - dotnet build Fairhr.Jobs/Fairhr.Jobs.csproj -c Release
+    - dotnet publish Fairhr.Jobs/Fairhr.Jobs.csproj -c Release -o ../job-release
+    - docker login -u $REGISTRY_USER -p $REGISTRY_PASSWD $REGISTRY_HOST
+    - docker build -f Dockerfile -t $REGISTRY_HOST/fairhr/jobs:$CI_COMMIT_SHA
+    - docker push $REGISTRY_HOST/fairhr/jobs:$CI_COMMIT_SHA
+  artifacts:
+    paths:
+      - job-release/
+  only:
+    - v*
 
 before_script:
-  - "dotnet restore --configfile NuGet.Config"
+  - 'which ssh-agent || ( apt-get install -qq openssh-client)'
+  - eval $(ssh-agent -s)
+  - ssh-add <(echo "$SSH_QA_KEY")
+  - mkdir -p ~/.ssh
+  - '[[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config'
 
-build:
-  stage: build
-  script: "dotnet build"
+todev:
+  stage: dev
+  tags:
+    - normal
+  script:
+    - scp -r -P 35674 job-release root@120.77.39.217:/var/vdb1/fairhr/dev
+    - ssh -p 35674 root@120.77.39.217 "cd /var/vdb1/fairhr/dev && rm -rf Fairhr.Jobs && mv job-release /var/vdb1/fairhr/dev/Fairhr.Jobs"
+    - ssh -p 35674 root@120.77.39.217 "cd /var/www/fairhr && docker-compose restart fairhrjobs-dev"
   only:
-    - qa
+    - Development
 
+toqa:
+  stage: qa
+  tags:
+    - normal
+  script:
+    - scp -r -P 35674 job-release root@120.77.39.217:/var/vdb1/fairhr/qa
+    - ssh -p 35674 root@120.77.39.217 "cd /var/vdb1/fairhr/qa && rm -rf Fairhr.Jobs && mv job-release /var/vdb1/fairhr/qa/Fairhr.Jobs"
+    - ssh -p 35674 root@120.77.39.217 "cd /var/www/fairhr && docker-compose restart fairhrjobs-qa"
+  only:
+    - QA
+
+toprod:
+  stage: prod
+  tags:
+    - normal
+  script:
+    - ssh -p 27630 root@172.18.100.223 "kubectl set image deploy/jobs jobs=registry-vpc.cn-shenzhen.aliyuncs.com/jobs:$CI_COMMIT_SHA -n fairhr"
+  only:
+    - v*
