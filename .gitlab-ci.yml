@@ -77,6 +77,6 @@ toprod:
   tags:
     - normal
   script:
-    - ssh -p 27630 root@172.18.100.223 "kubectl set image deploy/jobs jobs=registry-vpc.cn-shenzhen.aliyuncs.com/jobs:$CI_COMMIT_SHA -n fairhr"
+    - ssh -p 27630 root@172.18.100.223 "kubectl set image deploy/jobs jobs=$REGISTRY_HOST/fairhr/jobs:$CI_COMMIT_SHA -n fairhr"
   only:
     - /^v.*/
