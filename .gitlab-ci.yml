@@ -71,6 +71,17 @@ toqa:
     - ssh -p 35674 root@120.77.39.217 "cd /var/www/fairhr && docker-compose restart fairhrjobs-qa"
   only:
     - QA
+    
+tostaging:
+  stage: staging
+  tags:
+    - normal
+  script:
+    - scp -r -P 35674 job-release root@120.77.39.217:/var/vdb1/fairhr/staging
+    - ssh -p 35674 root@120.77.39.217 "cd /var/vdb1/fairhr/staging && rm -rf Fairhr.Jobs && mv job-release /var/vdb1/fairhr/staging/Fairhr.Jobs"
+    - ssh -p 35674 root@120.77.39.217 "cd /var/www/fairhr && docker-compose restart fairhrjobs-staging"
+  only:
+    - Staging
 
 toprod:
   stage: prod
