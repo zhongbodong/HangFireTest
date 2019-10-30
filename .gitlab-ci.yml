@@ -8,6 +8,7 @@ stages:
   - build
   - dev
   - qa
+  - staging
   - prod
 
 build-test:
