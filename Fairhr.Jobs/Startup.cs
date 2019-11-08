@@ -47,6 +47,7 @@ namespace Fairhr.Jobs
             //    // queue name参数只能由小写字母、数字、下划线和破折号（自1.7.6起）字符组成。
             //    Queues = Configuration["queue"].Split(new char[','], StringSplitOptions.RemoveEmptyEntries)
             //});
+
             app.UseHangfireServer();
             //只读面板，只能读取不能操作
             app.UseHangfireDashboard("/read", readOptions);
