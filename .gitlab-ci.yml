@@ -36,8 +36,8 @@ build-prod:
     - dotnet build Fairhr.Jobs/Fairhr.Jobs.csproj -c Release
     - dotnet publish Fairhr.Jobs/Fairhr.Jobs.csproj -c Release -o ../job-release
     - docker login -u $REGISTRY_USER -p $REGISTRY_PASSWD $REGISTRY_HOST
-    - docker build -f Dockerfile -t $REGISTRY_HOST/fairhr/jobs:$CI_COMMIT_SHA .
-    - docker push $REGISTRY_HOST/fairhr/jobs:$CI_COMMIT_SHA
+    - docker build -f Dockerfile -t $REGISTRY_HOST/fairhr/jobs:${CI_COMMIT_SHA:0:8} .
+    - docker push $REGISTRY_HOST/fairhr/jobs:${CI_COMMIT_SHA:0:8}
   artifacts:
     paths:
       - job-release/
@@ -89,6 +89,6 @@ toprod:
   tags:
     - normal
   script:
-    - ssh -p 27630 root@172.18.100.223 "kubectl set image deploy/jobs jobs=$REGISTRY_HOST/fairhr/jobs:$CI_COMMIT_SHA -n fairhr"
+    - ssh -p 27630 root@172.18.100.223 "kubectl set image deploy/jobs jobs=$REGISTRY_HOST/fairhr/jobs:${CI_COMMIT_SHA:0:8} -n fairhr"
   only:
     - Production
