@@ -50,10 +50,10 @@ namespace Fairhr.Jobs
 
             app.UseHangfireServer();
             //只读面板，只能读取不能操作
-            app.UseHangfireDashboard("/read", readOptions);
+            //app.UseHangfireDashboard("/read", readOptions);
 
             // 管理员面板
-            app.UseHangfireDashboard("/jobs", adminOptions);
+            app.UseHangfireDashboard("/jobs");
 
             app.UseFairhrLogs();
             app.Run(async (context) =>
