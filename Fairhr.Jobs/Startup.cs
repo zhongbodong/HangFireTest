@@ -65,36 +65,36 @@ namespace Fairhr.Jobs
 
         #region Hangfire配置 https://github.com/yuzd/Hangfire.HttpJob/wiki
 
-        private DashboardOptions adminOptions = new DashboardOptions()
-        {
-            DisplayStorageConnectionString = false,
-            IsReadOnlyFunc = context => false,
-            IgnoreAntiforgeryToken = true,
-            Authorization = new[] { new BasicAuthAuthorizationFilter(new BasicAuthAuthorizationFilterOptions() {
-            RequireSsl=false,
-            SslRedirect=false,
-            LoginCaseSensitive=true,
-            Users=new []{
-                 new BasicAuthAuthorizationUser
-                 {
-                    Login="admin",
-                    PasswordClear="123"
-                 },
-                 new BasicAuthAuthorizationUser
-                 {
-                    Login="fanyou",
-                    PasswordClear="123"
-                 }
-            }
-            })}
-        };
+        //private DashboardOptions adminOptions = new DashboardOptions()
+        //{
+        //    DisplayStorageConnectionString = false,
+        //    IsReadOnlyFunc = context => false,
+        //    IgnoreAntiforgeryToken = true,
+        //    Authorization = new[] { new BasicAuthAuthorizationFilter(new BasicAuthAuthorizationFilterOptions() {
+        //    RequireSsl=false,
+        //    SslRedirect=false,
+        //    LoginCaseSensitive=true,
+        //    Users=new []{
+        //         new BasicAuthAuthorizationUser
+        //         {
+        //            Login="admin",
+        //            PasswordClear="123"
+        //         },
+        //         new BasicAuthAuthorizationUser
+        //         {
+        //            Login="fanyou",
+        //            PasswordClear="123"
+        //         }
+        //    }
+        //    })}
+        //};
 
-        private DashboardOptions readOptions = new DashboardOptions()
-        {
-            IgnoreAntiforgeryToken = true,
-            DisplayStorageConnectionString = false,
-            IsReadOnlyFunc = context => true
-        };
+        //private DashboardOptions readOptions = new DashboardOptions()
+        //{
+        //    IgnoreAntiforgeryToken = true,
+        //    DisplayStorageConnectionString = false,
+        //    IsReadOnlyFunc = context => true
+        //};
         private void ConfigurationHangfire(IGlobalConfiguration globalConfiguration)
         {
             globalConfiguration.UseStorage(
