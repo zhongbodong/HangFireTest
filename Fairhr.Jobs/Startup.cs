@@ -53,8 +53,10 @@ namespace Fairhr.Jobs
             //app.UseHangfireDashboard("/read", readOptions);
 
             // 管理员面板
-            app.UseHangfireDashboard("/jobs");
-
+            app.UseHangfireDashboard("/jobs", new DashboardOptions()
+            {
+                Authorization = new[] { new CustomAuthorizeFilter() }
+            });
             app.UseFairhrLogs();
             app.Run(async (context) =>
            {
@@ -65,29 +67,29 @@ namespace Fairhr.Jobs
 
         #region Hangfire配置 https://github.com/yuzd/Hangfire.HttpJob/wiki
 
-        //private DashboardOptions adminOptions = new DashboardOptions()
-        //{
-        //    DisplayStorageConnectionString = false,
-        //    IsReadOnlyFunc = context => false,
-        //    IgnoreAntiforgeryToken = true,
-        //    Authorization = new[] { new BasicAuthAuthorizationFilter(new BasicAuthAuthorizationFilterOptions() {
-        //    RequireSsl=false,
-        //    SslRedirect=false,
-        //    LoginCaseSensitive=true,
-        //    Users=new []{
-        //         new BasicAuthAuthorizationUser
-        //         {
-        //            Login="admin",
-        //            PasswordClear="123"
-        //         },
-        //         new BasicAuthAuthorizationUser
-        //         {
-        //            Login="fanyou",
-        //            PasswordClear="123"
-        //         }
-        //    }
-        //    })}
-        //};
+        private DashboardOptions adminOptions = new DashboardOptions()
+        {
+            DisplayStorageConnectionString = false,
+            IsReadOnlyFunc = context => false,
+            IgnoreAntiforgeryToken = true,
+            Authorization = new[] { new BasicAuthAuthorizationFilter(new BasicAuthAuthorizationFilterOptions() {
+            RequireSsl=false,
+            SslRedirect=false,
+            LoginCaseSensitive=true,
+            Users=new []{
+                 new BasicAuthAuthorizationUser
+                 {
+                    Login="admin",
+                    PasswordClear="123"
+                 },
+                 new BasicAuthAuthorizationUser
+                 {
+                    Login="fanyou",
+                    PasswordClear="123"
+                 }
+            }
+            })}
+        };
 
         //private DashboardOptions readOptions = new DashboardOptions()
         //{
