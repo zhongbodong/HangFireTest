@@ -1,4 +1,4 @@
-image: registry-vpc.cn-shenzhen.aliyuncs.com/mytools/dotnetsdk:2.2
+image: registry-vpc.cn-shenzhen.aliyuncs.com/mytools/dotnetsdk:3.0
 
 variables:
   REGISTRY_USER: szli@fairhr.com
@@ -8,6 +8,7 @@ stages:
   - build
   - dev
   - qa
+  - local
   - staging
   - prod
 
@@ -61,6 +62,16 @@ todev:
     - ssh -p 35674 root@120.77.39.217 "cd /var/www/fairhr && docker-compose restart fairhrjobs-dev"
   only:
     - Development
+
+tolocal:
+  stage: local
+  tags:
+    - test
+  script:
+    - scp -r job-release root@168.33.162.142:/var/sdb1
+    - ssh root@168.33.162.142 "cd /var/www/fairhr && docker-compose restart jobs-local"
+  only:
+    - AutoTest
 
 toqa:
   stage: qa
