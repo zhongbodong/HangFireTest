@@ -1,4 +1,4 @@
-image: registry-vpc.cn-shenzhen.aliyuncs.com/mytools/dotnetsdk:3.0
+image: registry-vpc.cn-shenzhen.aliyuncs.com/mytools/dotnetsdk:2.2
 
 variables:
   REGISTRY_USER: szli@fairhr.com
@@ -27,7 +27,6 @@ build-test:
     - Development
     - QA
     - Staging
-    - AutoTest
 
 build-prod:
   stage: build
@@ -65,11 +64,15 @@ todev:
     - Development
 
 tolocal:
+  image: registry.cn-shenzhen.aliyuncs.com/mytools/dotnetsdk:2.2
   stage: local
   tags:
     - test
   script:
-    - scp -r job-release root@168.33.162.142:/var/sdb1
+    - "dotnet restore --configfile NuGet.Config"
+    - "dotnet build Fairhr.Jobs/Fairhr.Jobs.csproj -c Release"
+    - "dotnet publish Fairhr.Jobs/Fairhr.Jobs.csproj -c Release -o ../jobs-local"
+    - scp -r jobs-local root@168.33.162.142:/var/sdb1
     - ssh root@168.33.162.142 "cd /var/www/fairhr && docker-compose restart jobs-local"
   only:
     - AutoTest
