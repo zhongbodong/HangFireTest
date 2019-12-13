@@ -27,6 +27,7 @@ build-test:
     - Development
     - QA
     - Staging
+    - AutoTest
 
 build-prod:
   stage: build
