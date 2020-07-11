@@ -25,11 +25,11 @@ namespace Fairhr.Jobs
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddHangfire(ConfigurationHangfire);
-            services.AddFairhrLogs(options =>
-            {
-                options.Key = Configuration["logKey"];
-                options.ServerUrl = Configuration["logUrl"];
-            });
+            //services.AddFairhrLogs(options =>
+            //{
+            //    options.Key = Configuration["logKey"];
+            //    options.ServerUrl = Configuration["logUrl"];
+            //});
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
@@ -57,7 +57,7 @@ namespace Fairhr.Jobs
             {
                 Authorization = new[] { new CustomAuthorizeFilter() }
             });
-            app.UseFairhrLogs();
+            //app.UseFairhrLogs();
             app.Run(async (context) =>
            {
                await Task.CompletedTask;
@@ -100,7 +100,7 @@ namespace Fairhr.Jobs
         private void ConfigurationHangfire(IGlobalConfiguration globalConfiguration)
         {
             globalConfiguration.UseStorage(
-                new MySqlStorage(Configuration["jobdb"], new MySqlStorageOptions()
+                new MySqlStorage(Configuration.GetSection("HangfireMysqlConnectionString").Get<string>(), new MySqlStorageOptions()
                 {
                     QueuePollInterval = TimeSpan.FromSeconds(15),
                     JobExpirationCheckInterval = TimeSpan.FromHours(1),
@@ -121,8 +121,8 @@ namespace Fairhr.Jobs
                         Server = "smtp.qq.com",
                         Port = 465,
                         UseSsl = true,
-                        User = "510423039@qq.com",
-                        Password = "vkskogjacsqabjgd"
+                        User = "748441309@qq.com",
+                        Password = "xbwstl9796,,,"
                     },
                     JobExpirationTimeoutDay = 1
                 });

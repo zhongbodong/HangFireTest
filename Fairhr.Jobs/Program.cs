@@ -18,11 +18,16 @@ namespace Fairhr.Jobs
             CreateWebHostBuilder(args).Build().Run();
         }
 
+        //public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
+        //    WebHost.CreateDefaultBuilder(args)
+        //   .ConfigureAppConfiguration(
+        //        builder => builder
+        //   .AddApollo(builder.Build().GetSection("apollo"))
+        //   .AddDefault())
+        //   .UseStartup<Startup>();
+
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
-           .ConfigureAppConfiguration(builder => builder
-           .AddApollo(builder.Build().GetSection("apollo"))
-           .AddDefault())
-           .UseStartup<Startup>();
+                .UseStartup<Startup>();
     }
 }
