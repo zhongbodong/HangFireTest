@@ -1,0 +1,169 @@
+{
+  "version": 3,
+  "targets": {
+    ".NETCoreApp,Version=v3.1": {
+      "Hangfire.HttpJob.Client/1.1.5": {
+        "type": "package",
+        "dependencies": {
+          "HttpClientFactory": "1.0.1",
+          "Newtonsoft.Json": "12.0.2"
+        },
+        "compile": {
+          "lib/netstandard2.0/Hangfire.HttpJob.Client.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/Hangfire.HttpJob.Client.dll": {}
+        }
+      },
+      "HttpClientFactory/1.0.1": {
+        "type": "package",
+        "compile": {
+          "lib/netstandard2.0/HttpClientFactory.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/HttpClientFactory.dll": {}
+        }
+      },
+      "Newtonsoft.Json/12.0.2": {
+        "type": "package",
+        "compile": {
+          "lib/netstandard2.0/Newtonsoft.Json.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/Newtonsoft.Json.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "Hangfire.HttpJob.Client/1.1.5": {
+      "sha512": "qt6WP5V7JRZAgtEZld9mnD8ebSr6ujltpnY5TofkJKfI91IxjsAJIfPOzfZIciMWbNcyNuJDy3zon9OGZ8Ofig==",
+      "type": "package",
+      "path": "hangfire.httpjob.client/1.1.5",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "hangfire.httpjob.client.1.1.5.nupkg.sha512",
+        "hangfire.httpjob.client.nuspec",
+        "lib/net45/Hangfire.HttpJob.Client.dll",
+        "lib/netstandard2.0/Hangfire.HttpJob.Client.dll"
+      ]
+    },
+    "HttpClientFactory/1.0.1": {
+      "sha512": "QASSAVBIK/gayd5eVq+BVYBjoqZJ8tuh3rGy8xX2pTwGeJ8R0Aal8P9tK/lEC2hrmgWMhrVTFAYxjP0+R3ffmw==",
+      "type": "package",
+      "path": "httpclientfactory/1.0.1",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "httpclientfactory.1.0.1.nupkg.sha512",
+        "httpclientfactory.nuspec",
+        "lib/net45/HttpClientFactory.dll",
+        "lib/netstandard2.0/HttpClientFactory.dll"
+      ]
+    },
+    "Newtonsoft.Json/12.0.2": {
+      "sha512": "rTK0s2EKlfHsQsH6Yx2smvcTCeyoDNgCW7FEYyV01drPlh2T243PR2DiDXqtC5N4GDm4Ma/lkxfW5a/4793vbA==",
+      "type": "package",
+      "path": "newtonsoft.json/12.0.2",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "LICENSE.md",
+        "lib/net20/Newtonsoft.Json.dll",
+        "lib/net20/Newtonsoft.Json.xml",
+        "lib/net35/Newtonsoft.Json.dll",
+        "lib/net35/Newtonsoft.Json.xml",
+        "lib/net40/Newtonsoft.Json.dll",
+        "lib/net40/Newtonsoft.Json.xml",
+        "lib/net45/Newtonsoft.Json.dll",
+        "lib/net45/Newtonsoft.Json.xml",
+        "lib/netstandard1.0/Newtonsoft.Json.dll",
+        "lib/netstandard1.0/Newtonsoft.Json.xml",
+        "lib/netstandard1.3/Newtonsoft.Json.dll",
+        "lib/netstandard1.3/Newtonsoft.Json.xml",
+        "lib/netstandard2.0/Newtonsoft.Json.dll",
+        "lib/netstandard2.0/Newtonsoft.Json.xml",
+        "lib/portable-net40+sl5+win8+wp8+wpa81/Newtonsoft.Json.dll",
+        "lib/portable-net40+sl5+win8+wp8+wpa81/Newtonsoft.Json.xml",
+        "lib/portable-net45+win8+wp8+wpa81/Newtonsoft.Json.dll",
+        "lib/portable-net45+win8+wp8+wpa81/Newtonsoft.Json.xml",
+        "newtonsoft.json.12.0.2.nupkg.sha512",
+        "newtonsoft.json.nuspec"
+      ]
+    }
+  },
+  "projectFileDependencyGroups": {
+    ".NETCoreApp,Version=v3.1": [
+      "Hangfire.HttpJob.Client >= 1.1.5"
+    ]
+  },
+  "packageFolders": {
+    "C:\\Users\\Administrator\\.nuget\\packages\\": {},
+    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
+  },
+  "project": {
+    "version": "1.0.0",
+    "restore": {
+      "projectUniqueName": "D:\\a_hanjiakankan\\HangfireClientTest\\HangfireClientTest\\HangfireClientTest.csproj",
+      "projectName": "HangfireClientTest",
+      "projectPath": "D:\\a_hanjiakankan\\HangfireClientTest\\HangfireClientTest\\HangfireClientTest.csproj",
+      "packagesPath": "C:\\Users\\Administrator\\.nuget\\packages\\",
+      "outputPath": "D:\\a_hanjiakankan\\HangfireClientTest\\HangfireClientTest\\obj\\",
+      "projectStyle": "PackageReference",
+      "fallbackFolders": [
+        "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+      ],
+      "configFilePaths": [
+        "C:\\Users\\Administrator\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+      ],
+      "originalTargetFrameworks": [
+        "netcoreapp3.1"
+      ],
+      "sources": {
+        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+        "https://api.nuget.org/v3/index.json": {}
+      },
+      "frameworks": {
+        "netcoreapp3.1": {
+          "projectReferences": {}
+        }
+      },
+      "warningProperties": {
+        "warnAsError": [
+          "NU1605"
+        ]
+      }
+    },
+    "frameworks": {
+      "netcoreapp3.1": {
+        "dependencies": {
+          "Hangfire.HttpJob.Client": {
+            "target": "Package",
+            "version": "[1.1.5, )"
+          }
+        },
+        "imports": [
+          "net461",
+          "net462",
+          "net47",
+          "net471",
+          "net472",
+          "net48"
+        ],
+        "assetTargetFallback": true,
+        "warn": true,
+        "frameworkReferences": {
+          "Microsoft.AspNetCore.App": {
+            "privateAssets": "none"
+          },
+          "Microsoft.NETCore.App": {
+            "privateAssets": "all"
+          }
+        },
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.101\\RuntimeIdentifierGraph.json"
+      }
+    }
+  }
+}
